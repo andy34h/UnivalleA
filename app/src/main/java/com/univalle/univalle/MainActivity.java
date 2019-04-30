@@ -1,6 +1,8 @@
 package com.univalle.univalle;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,12 +31,26 @@ public class MainActivity extends AppCompatActivity
 
     private String nombreCarpeta = "univalleA";
 
+    void testPreferencias() {
+        SharedPreferences sp = getSharedPreferences("emilio",
+                Context.MODE_PRIVATE);
+
+        // Guardar
+        sp.edit().putString("nombre","univalle").commit();
+        sp.edit().putBoolean("activo",false).commit();
+        sp.edit().putInt("edad",20).commit();
+
+        // Obtener
+        int edad = sp.getInt("edad",-1);
+        String nombre= sp.getString("nombre","--");
+    }
+
     void crearCarpeta() {
 
-        File fileDocuments =
-                Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_DOCUMENTS
-                );
+        File fileDocuments = getCacheDir();
+//                Environment.getExternalStoragePublicDirectory(
+//                        Environment.DIRECTORY_DOCUMENTS
+//                );
         File myFile = new File(
                 fileDocuments.getAbsolutePath(),
                 nombreCarpeta
@@ -47,7 +63,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     void crearArchivo() {
-        File fileDocuments = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File fileDocuments = getCacheDir();//Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+//        File fileDocuments = getDataDir();
         File miCarpeta = new File(fileDocuments.getAbsolutePath(), nombreCarpeta);
         File miArchivo = new File(miCarpeta.getAbsolutePath(), "A.txt");
 
@@ -59,7 +76,7 @@ public class MainActivity extends AppCompatActivity
             ous.close();
             Toast.makeText(this, "Archivo creado", Toast.LENGTH_SHORT)
                     .show();
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, "Archivo no creado", Toast.LENGTH_SHORT)
                     .show();
         }
@@ -103,6 +120,7 @@ public class MainActivity extends AppCompatActivity
 
         crearCarpeta();
         crearArchivo();
+        testPreferencias();
     }
 
     @Override
