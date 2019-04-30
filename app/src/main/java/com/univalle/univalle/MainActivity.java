@@ -16,14 +16,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static String TAG = MainActivity.class.getSimpleName();
 
-    void demoArchivos() {
+    private String nombreCarpeta = "univalleA";
+
+    void crearCarpeta() {
 
         File fileDocuments =
                 Environment.getExternalStoragePublicDirectory(
@@ -31,13 +37,33 @@ public class MainActivity extends AppCompatActivity
                 );
         File myFile = new File(
                 fileDocuments.getAbsolutePath(),
-                "univalleA"
+                nombreCarpeta
         );
 
         myFile.mkdir();
 
         //new File()
         Log.d(TAG, "-->" + fileDocuments.getAbsolutePath());
+    }
+
+    void crearArchivo() {
+        File fileDocuments = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File miCarpeta = new File(fileDocuments.getAbsolutePath(), nombreCarpeta);
+        File miArchivo = new File(miCarpeta.getAbsolutePath(), "A.txt");
+
+        String texto = "Emilio";
+
+        try {
+            FileOutputStream ous = new FileOutputStream(miArchivo);
+            ous.write(texto.getBytes());
+            ous.close();
+            Toast.makeText(this, "Archivo creado", Toast.LENGTH_SHORT)
+                    .show();
+        }catch (Exception e){
+            Toast.makeText(this, "Archivo no creado", Toast.LENGTH_SHORT)
+                    .show();
+        }
+
     }
 
     @Override
@@ -70,12 +96,13 @@ public class MainActivity extends AppCompatActivity
                     new String[]{
                             Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    },43
+                    }, 43
             );
         }
 
 
-        demoArchivos();
+        crearCarpeta();
+        crearArchivo();
     }
 
     @Override
