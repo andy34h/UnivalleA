@@ -20,9 +20,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity
@@ -30,6 +32,30 @@ public class MainActivity extends AppCompatActivity
     private static String TAG = MainActivity.class.getSimpleName();
 
     private String nombreCarpeta = "univalleA";
+
+
+
+    void leer() {
+        File fileDocuments = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File miCarpeta = new File(fileDocuments.getAbsolutePath(), nombreCarpeta);
+        File miArchivo = new File(miCarpeta.getAbsolutePath(), "A.txt");
+
+        String text = "";
+        try {
+            String line;
+            BufferedReader br =
+                    new BufferedReader(new FileReader(miArchivo));
+            while ((line = br.readLine()) != null) {
+                text  += line;
+            }
+            br.close();
+        } catch (IOException e) {
+        }
+
+        Log.d(TAG, "---->" + text);
+    }
+
+
 
     void testPreferencias() {
         SharedPreferences sp = getSharedPreferences("emilio",
@@ -63,8 +89,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     void crearArchivo() {
-        File fileDocuments = getCacheDir();//Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-//        File fileDocuments = getDataDir();
+        File fileDocuments = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         File miCarpeta = new File(fileDocuments.getAbsolutePath(), nombreCarpeta);
         File miArchivo = new File(miCarpeta.getAbsolutePath(), "A.txt");
 
