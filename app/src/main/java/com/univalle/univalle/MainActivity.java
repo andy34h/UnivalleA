@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    void leer() {
+    void leerArchivo() {
         File fileDocuments = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         File miCarpeta = new File(fileDocuments.getAbsolutePath(), nombreCarpeta);
         File miArchivo = new File(miCarpeta.getAbsolutePath(), "A.txt");
@@ -72,17 +71,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     void crearCarpeta() {
-
-        File fileDocuments = getCacheDir();
-//                Environment.getExternalStoragePublicDirectory(
-//                        Environment.DIRECTORY_DOCUMENTS
-//                );
-        File myFile = new File(
-                fileDocuments.getAbsolutePath(),
-                nombreCarpeta
-        );
-
-        myFile.mkdir();
+        File fileDocuments = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File miCarpeta = new File(fileDocuments.getAbsolutePath(), nombreCarpeta);
+        miCarpeta.mkdir();
 
         //new File()
         Log.d(TAG, "-->" + fileDocuments.getAbsolutePath());
@@ -146,6 +137,7 @@ public class MainActivity extends AppCompatActivity
         crearCarpeta();
         crearArchivo();
         testPreferencias();
+        leerArchivo();
     }
 
     @Override
