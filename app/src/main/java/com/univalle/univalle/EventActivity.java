@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -24,13 +25,16 @@ public class EventActivity extends AppCompatActivity {
         btnOnClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Toast.makeText(getApplicationContext()
+                        , "OnClick()", Toast.LENGTH_SHORT).show();
             }
         });
 
         btnOnLongClick.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                Toast.makeText(getApplicationContext()
+                        , "onLongClick()", Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -39,10 +43,19 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
+                if (motionEvent.getAction() ==
+                        MotionEvent.ACTION_DOWN) {
+                    Toast.makeText(getApplicationContext()
+                            , "ACTION_DOWN", Toast.LENGTH_SHORT).show();
+                } else if (motionEvent.getAction() ==
+                        MotionEvent.ACTION_UP) {
+                    Toast.makeText(getApplicationContext()
+                            , "ACTION_UP", Toast.LENGTH_SHORT).show();
+                }
+
                 return false;
             }
         });
-
 
 
     }
