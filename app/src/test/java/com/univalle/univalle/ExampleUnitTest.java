@@ -12,6 +12,11 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+        long initialTime = System.currentTimeMillis();
+        long fac = ThreadActivity.factorial(25);
+        long finalTime = System.currentTimeMillis();
+
+        System.out.println("Factorial: " + fac);
+        System.out.println("TiempoTotal: " + (finalTime - initialTime));
     }
 }
