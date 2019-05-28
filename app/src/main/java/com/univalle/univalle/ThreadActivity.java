@@ -1,5 +1,7 @@
 package com.univalle.univalle;
 
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -47,6 +49,9 @@ public class ThreadActivity extends AppCompatActivity {
             }
         }).start();
 
+        FactorialTask factorialTask = new FactorialTask();
+        factorialTask.execute(new BigInteger("5"));
+
     }
 
 
@@ -65,6 +70,37 @@ public class ThreadActivity extends AppCompatActivity {
             return number.multiply(
                     factorial2(number.add(new BigInteger("-1")))
             );
+        }
+    }
+
+
+
+    class FactorialTask extends AsyncTask<BigInteger,Void,Boolean> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(getApplicationContext(),"Start",Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            Toast.makeText(getApplicationContext(),"Finish",Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Boolean doInBackground(BigInteger... bigIntegers) {
+            BigInteger fac = factorial2(bigIntegers[0]);
+            System.out.println("FAc: "+fac.toString());
+
+            // Prueba
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return true;
         }
     }
 }
