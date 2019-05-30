@@ -5,8 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
 
 public class CanvasActivity extends AppCompatActivity {
@@ -23,22 +25,28 @@ public class CanvasActivity extends AppCompatActivity {
 
     }
 
-    public class MyCanvas extends View {
+    public static class MyCanvas extends View {
         private Paint mPaint;
 
         public MyCanvas(Context context) {
             super(context);
         }
 
+        public MyCanvas(Context context, @Nullable AttributeSet attrs) {
+            super(context, attrs);
+        }
+
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            // and we set a new Paint with the desired attributes
+            System.out.println("-->" + canvas.getWidth());
+            System.out.println("-->" + canvas.getHeight());
             mPaint = new Paint();
             mPaint.setAntiAlias(true);
             mPaint.setColor(Color.BLACK);
             mPaint.setStyle(Paint.Style.STROKE);
-            canvas.drawCircle(100, 100, 30, mPaint);
+            mPaint.setStrokeWidth(15f);
+            canvas.drawCircle(300, 300, 30, mPaint);
         }
 
         @Override
