@@ -25,4 +25,5 @@
     <string name="_0">0</string>
     <string name="equal">=</string>
     <string name="plus">+</string>
+    <string name="draw">DRAW</string>
 </resources>
