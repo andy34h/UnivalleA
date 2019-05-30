@@ -42,11 +42,15 @@ public class CanvasActivity extends AppCompatActivity {
             System.out.println("-->" + canvas.getWidth());
             System.out.println("-->" + canvas.getHeight());
             mPaint = new Paint();
-            mPaint.setAntiAlias(true);
-            mPaint.setColor(Color.BLACK);
+            //mPaint.setAntiAlias(true);
+            mPaint.setColor(Color.BLUE);
             mPaint.setStyle(Paint.Style.STROKE);
             mPaint.setStrokeWidth(15f);
-            canvas.drawCircle(300, 300, 30, mPaint);
+            float maxW = canvas.getWidth();
+            float maxH = canvas.getHeight();
+            canvas.drawLine(0,0,maxW/2, maxH/2,mPaint);
+            mPaint.setColor(Color.YELLOW);
+            canvas.drawCircle(maxW/2, maxH/2, 100, mPaint);
         }
 
         @Override
